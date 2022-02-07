@@ -1,23 +1,58 @@
-var Service;
-var Characteristic;
+"use strict";
 
+var Service, Characteristic, HomebridgeAPI;
 var applescript = require('applescript');
+const { HomebridgeShortcutsVersion } = require('./package.json');
 
 module.exports = function(homebridge) {
-	Service = homebridge.hap.Service;
-	Characteristic = homebridge.hap.Characteristic;
-	homebridge.registerAccessory('homebridge-applescript', 'Applescript', ApplescriptAccessory);
+
+  Service = homebridge.hap.Service;
+  Characteristic = homebridge.hap.Characteristic;
+  HomebridgeAPI = homebridge;
+  homebridge.registerAccessory("homebridge-shortcuts", "Siri Shorcuts", Shortcuts);
 }
 
-function ApplescriptAccessory(log, config) {
-	this.log = log;
-	this.service = 'Switch';
-	this.name = config['name'];
-	this.onCommand = "tell application ''Shortcuts Events'' to set theResult to run shortcut " + "''" + config['on'] + "''";
-	this.offCommand = "tell application ''Shortcuts Events'' to set theResult to run shortcut " + "''" + config['off'] + "''";
+
+function Shortcuts(log, config) {
+  this.log = log;
+  this.name = config.name;
+  this.onCommand = "tell application ''Shortcuts Events'' to set theResult to run shortcut " + "''" + config['on'] + "''";
+  this.offCommand = "tell application ''Shortcuts Events'' to set theResult to run shortcut " + "''" + config['off'] + "''";
+  this.stateful = config.stateful;
+  this.time = config.time ? config.time : 1000;
+  this.timer = null;
+  this._service = new Service.Switch(this.name);
+  
+  this.informationService = new Service.AccessoryInformation();
+  this.informationService
+      .setCharacteristic(Characteristic.Manufacturer, 'Homebridge')
+      .setCharacteristic(Characteristic.Model, 'Shortcuts')
+      .setCharacteristic(Characteristic.FirmwareRevision, HomebridgeShortcutsVersion)
+      .setCharacteristic(Characteristic.SerialNumber, 'Shortcuts-' + this.name.replace(/\s/g, '-'));
+  
+  this.cacheDirectory = HomebridgeAPI.user.persistPath();
+  this.storage = require('node-persist');
+  this.storage.initSync({dir:this.cacheDirectory, forgiveParseErrors: true});
+  
+  this._service.getCharacteristic(Characteristic.On)
+    .on('set', this._setOn.bind(this));
+
+
+  if (this.stateful) {
+	var cachedState = this.storage.getItemSync(this.name);
+	if((cachedState === undefined) || (cachedState === false)) {
+		this._service.setCharacteristic(Characteristic.On, false);
+	} else {
+		this._service.setCharacteristic(Characteristic.On, true);
+	}
+  }
 }
 
-ApplescriptAccessory.prototype.setState = function(powerOn, callback) {
+Shortcuts.prototype.getServices = function() {
+  return [this.informationService, this._service];
+}
+
+Shortcuts.prototype.setState = function(powerOn, callback) {
 	var accessory = this;
 	var state = powerOn ? 'on' : 'off';
 	var prop = state + 'Command';
@@ -36,18 +71,23 @@ ApplescriptAccessory.prototype.setState = function(powerOn, callback) {
 	}
 }
 
-ApplescriptAccessory.prototype.getServices = function() {
-	var informationService = new Service.AccessoryInformation();
-	var switchService = new Service.Switch(this.name);
+Shortcuts.prototype._setOn = function(on, callback) {
 
-	informationService
-		.setCharacteristic(Characteristic.Manufacturer, 'Applescript Manufacturer')
-		.setCharacteristic(Characteristic.Model, 'Applescript Model')
-		.setCharacteristic(Characteristic.SerialNumber, 'Applescript Serial Number');
+  this.log("Setting switch to " + on);
 
-	switchService
-		.getCharacteristic(Characteristic.On)
-		.on('set', this.setState.bind(this));
-
-	return [switchService];
+  if (on && !this.stateful) {
+    this.timer = setTimeout(function() {
+      this._service.setCharacteristic(Characteristic.On, false);
+    }.bind(this), this.time);
+  } else if (!on  && !this.stateful) {
+    this.timer = setTimeout(function() {
+      this._service.setCharacteristic(Characteristic.On, true);
+    }.bind(this), this.time);
+  }
+  
+  if (this.stateful) {
+	this.storage.setItemSync(this.name, on);
+  }
+  
+  callback();
 }

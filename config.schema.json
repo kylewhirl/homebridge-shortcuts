@@ -1,34 +1,40 @@
 {
-  "pluginAlias": "Siri Shortcuts",
-  "pluginType": "accessory",
-  "singular": false,
-  "schema": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "title": "Name",
-        "type": "string",
-        "required": true,
-        "description": "The name of the switch to expose in HomeKit."
-      },
-      "stateful": {
-        "title": "Stateful",
-        "required": true,
-        "type": "boolean",
-        "default": false,
-        "description": "If checked, the switch will stay on instead of automaticall switching off."
-      },
-      "on": {
-      "required": true,
-      "title": "On",
-      "type": "string",
-      "description": "The name of the shortcut to run when the switch turns on."
-      },
-      "off": {
-        "title": "Off",
-        "type": "string",
-        "description": "The name of the shortcut to run when the switch turns off."
+    "pluginAlias": "Siri Shortcuts",
+    "pluginType": "accessory",
+    "singular": false,
+    "schema": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "title": "Name",
+                "type": "string",
+                "required": true,
+                "description": "The name of the switch to expose in HomeKit."
+            },
+            "stateful": {
+                "title": "Stateful",
+                "required": true,
+                "type": "boolean",
+                "default": false,
+                "description": "If checked, the switch will stay on instead of automaticall switching off."
+            },
+            "time": {
+                "title": "Time",
+                "type": "number",
+                "default": 1000,
+                "description": "The switch will turn off after this number of milliseconds. Not used if the switch is stateful."
+            },    
+            "on": {
+                "required": true,
+                "title": "On",
+                "type": "string",
+                "description": "The name of the shortcut to run when the switch turns on."
+             },
+            "off": {
+                 "title": "Off",
+                 "type": "string",
+                "description": "The name of the shortcut to run when the switch turns off."
+            }
         }
     }
-  }
 }
