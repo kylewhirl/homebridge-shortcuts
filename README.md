@@ -3,7 +3,7 @@
 
 <img src="https://github.com/homebridge/branding/raw/master/logos/homebridge-wordmark-logo-vertical.png" width="150">
   
-<img src="/images/line.svg"
+<img src="/images/line.svg">
   
 <img src="https://is2-ssl.mzstatic.com/image/thumb/Purple115/v4/f8/c1/7d/f8c17d3b-1261-1e04-a26b-0d86f31be916/source/512x512bb.png" width="150">
 
