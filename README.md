@@ -13,7 +13,9 @@ Run Shortcuts on macOS from HomeKit.
 # How to Use
 
 Install homebridge
+
 Use the config-ui editor to search for homebridge-shortcuts
+
 Follow the setup instructions in the ConfigUI
 
 # Config UI
