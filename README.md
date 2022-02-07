@@ -1,11 +1,8 @@
 
 <p align="center">
 
-<img src="https://github.com/homebridge/branding/raw/master/logos/homebridge-wordmark-logo-vertical.png" width="150">
   
-<img src="/images/line.svg" height="150">
-  
-<img src="/images/shortcuts logo.png" width="150">
+<img src="/images/header.png" height="150">
 
 </p>
 
