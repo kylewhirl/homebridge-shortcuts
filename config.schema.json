@@ -1,7 +1,7 @@
 {
   "pluginAlias": "Siri Shortcuts",
-  "pluginType": "platform",
-  "singular": true,
+  "pluginType": "accessory",
+  "singular": false,
   "schema": {
     "type": "object",
     "properties": {
@@ -9,11 +9,12 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Siri Shortcuts"
+        "description": "T name of the switch to expose in HomeKit."
       },
       "stateful": {
         "title": "Stateful",
         "required": true,
+        "type": "boolean",
         "default": false,
         "description": "If checked, the switch will stay on instead of automaticall switching off."
       },
