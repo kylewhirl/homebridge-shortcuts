@@ -10,7 +10,24 @@
         "type": "string",
         "required": true,
         "default": "Siri Shortcuts"
-      }
+      },
+      "stateful": {
+        "title": "Stateful",
+        "required": true,
+        "default": false,
+        "description": "If checked, the switch will stay on instead of automaticall switching off."
+      },
+      "on": {
+      "required": true,
+      "title": "On",
+      "type": "string",
+      "description": "The name of the shortcut to run when the switch turns on."
+      },
+      "off": {
+        "title": "Off",
+        "type": "string",
+        "description": "The name of the shortcut to run when the switch turns off."
+        }
     }
   }
 }
