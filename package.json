@@ -1,24 +1,23 @@
 {
-  "name": "homebridge-shortcuts",
-  "displayName": "Siri Shortcuts",
-  "version": "1.0.0",
-  "description": "This plugin runs Shortcuts on Mac",
-  "license": "ISC",
-  "keywords": [
-    "homebridge-plugin"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/kylewhirl/homebridge-shortcuts.git"
-  },
-  "bugs": {
-    "url": "http://github.com/kylewhirl/homebridge-shortcuts/issues"
-  },
-  "engines": {
-    "node": ">=0.12.0",
-    "homebridge": ">=0.2.0"
-  },
-  "dependencies": {
-    "node-persist": "^2.1.0"
-  }
+	"name": "homebridge-applescript",
+	"version": "0.0.1",
+	"description": "Applescript plugin for homebridge: https://github.com/nfarina/homebridge",
+	"license": "ISC",
+	"keywords": [
+		"homebridge-plugin"
+	],
+	"engines": {
+		"node": ">=0.12.0",
+		"homebridge": ">=0.2.0"
+	},
+	"author": {
+		"name": "Dan Budiac"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/dansays/homebridge-applescript.git"
+	},
+	"dependencies": {
+		"applescript": "^1.0.0"
+	}
 }
