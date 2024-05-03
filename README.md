@@ -1,5 +1,7 @@
 # This plugin currently does not work
 
+Check out this Much Better one!
+https://github.com/duddu/homebridge-shortcuts-buttons
 
 <p align="center">
 
