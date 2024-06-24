@@ -42,7 +42,7 @@ The shortcut to run when the switch is turned on. Write this exactly how it appe
 
 ### Off
 
-The shortcut to run when the switch is turned on. Write this exactly how it appears in the Shortcuts app. Leave blank to not run a shortcut.
+The shortcut to run when the switch is turned off. Write this exactly how it appears in the Shortcuts app. Leave blank to not run a shortcut.
 
 
  
